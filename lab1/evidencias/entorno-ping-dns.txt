@@ -1,0 +1,9 @@
+PING google.com (64.233.186.100) 56(84) bytes of data.
+64 bytes from 100.186.233.64.in-addr.arpa (64.233.186.100): icmp_seq=1 ttl=105 time=33.2 ms
+64 bytes from 100.186.233.64.in-addr.arpa (64.233.186.100): icmp_seq=2 ttl=105 time=81.7 ms
+64 bytes from 100.186.233.64.in-addr.arpa (64.233.186.100): icmp_seq=3 ttl=105 time=34.5 ms
+64 bytes from 100.186.233.64.in-addr.arpa (64.233.186.100): icmp_seq=4 ttl=105 time=211 ms
+
+--- google.com ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3006ms
+rtt min/avg/max/mdev = 33.168/89.996/210.643/72.348 ms

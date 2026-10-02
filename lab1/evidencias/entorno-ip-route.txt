@@ -1,0 +1,2 @@
+default via 172.27.64.1 dev eth0 proto kernel onlink 
+172.27.64.0/20 dev eth0 proto kernel scope link src 172.27.70.154 

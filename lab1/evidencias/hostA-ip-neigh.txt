@@ -1,0 +1,1 @@
+10.10.1.2 dev vethA lladdr 32:66:45:9d:db:c4 STALE 
