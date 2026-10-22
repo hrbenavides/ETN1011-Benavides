@@ -1,0 +1,21 @@
+=== Cambiando ospfd=no a ospfd=yes en /etc/frr/daemons ===
+
+=== Verificación del cambio ===
+ospfd=yes
+
+=== Reiniciando FRR ===
+● frr.service - FRRouting
+     Loaded: loaded (/usr/lib/systemd/system/frr.service; enabled; preset: enabled)
+     Active: active (running) since Thu 2026-10-22 00:52:12 -03; 3s ago
+ Invocation: 16bad31238a54ea785abc1d573eac7db
+       Docs: https://frrouting.readthedocs.io/en/latest/setup.html
+    Process: 15290 ExecStart=/usr/lib/frr/frrinit.sh start (code=exited, status=0/SUCCESS)
+   Main PID: 15299 (watchfrr)
+     Status: "FRR Operational"
+      Tasks: 10 (limit: 19070)
+     Memory: 25.2M (peak: 39.7M)
+        CPU: 134ms
+     CGroup: /system.slice/frr.service
+             ├─15299 /usr/lib/frr/watchfrr -d mgmtd zebra ospfd staticd
+             ├─15310 /usr/lib/frr/mgmtd -d -F traditional -A 127.0.0.1
+             ├─15312 /usr/lib/frr/zebra -d -F traditional -A 127.0.0.1 -s 90000000

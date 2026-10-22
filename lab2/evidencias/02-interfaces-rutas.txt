@@ -1,0 +1,8 @@
+=== ip -br addr ===
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+eth0             UP             172.24.235.74/20 fe80::215:5dff:fe6c:e368/64 
+dummy0           UNKNOWN        10.10.10.1/24 fe80::646b:4eff:fe3a:102f/64 
+=== ip -4 route ===
+default via 172.24.224.1 dev eth0 proto kernel onlink 
+10.10.10.0/24 dev dummy0 proto kernel scope link src 10.10.10.1 
+172.24.224.0/20 dev eth0 proto kernel scope link src 172.24.235.74 

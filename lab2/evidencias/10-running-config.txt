@@ -1,0 +1,26 @@
+=== sudo vtysh -c 'show running-config' ===
+Building configuration...
+
+Current configuration:
+!
+frr version 10.5.1
+frr defaults traditional
+hostname RFXL
+domainname localdomain
+log syslog informational
+service integrated-vtysh-config
+!
+ip route 198.51.100.0/24 blackhole
+!
+end
+
+=== sudo vtysh -c 'show ip route static' ===
+Codes: K - kernel route, C - connected, L - local, S - static,
+       R - RIP, O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, F - PBR,
+       f - OpenFabric, t - Table-Direct,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+IPv4 unicast VRF default:
+S>* 198.51.100.0/24 [1/0] unreachable (blackhole), weight 1, 00:00:00

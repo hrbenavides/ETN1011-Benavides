@@ -1,0 +1,14 @@
+=== ip -br addr show dummy0 ===
+dummy0           UNKNOWN        10.10.10.1/24 fe80::646b:4eff:fe3a:102f/64 
+=== ip link show dummy0 ===
+3: dummy0: <BROADCAST,NOARP,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/ether 66:6b:4e:3a:10:2f brd ff:ff:ff:ff:ff:ff
+=== ip addr show dummy0 ===
+3: dummy0: <BROADCAST,NOARP,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/ether 66:6b:4e:3a:10:2f brd ff:ff:ff:ff:ff:ff
+    inet 10.10.10.1/24 scope global dummy0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::646b:4eff:fe3a:102f/64 scope link proto kernel_ll 
+       valid_lft forever preferred_lft forever
+=== ip -4 route show 10.10.10.0/24 ===
+10.10.10.0/24 dev dummy0 proto kernel scope link src 10.10.10.1 

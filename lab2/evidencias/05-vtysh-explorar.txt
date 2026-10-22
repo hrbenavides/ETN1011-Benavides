@@ -1,0 +1,60 @@
+=== sudo vtysh -c 'show interface' ===
+Interface dummy0 is up, line protocol is up
+  Link ups:       1    last: 2026/10/21 02:59:10.29
+  Link downs:     1    last: 2026/10/21 02:58:53.54
+  vrf: default
+  index 3 metric 0 mtu 1500 speed 0 txqlen 1000
+  flags: <UP,LOWER_UP,BROADCAST,RUNNING,NOARP>
+  MPLS  Not specified by CLI
+  Multicast config is Not specified by CLI
+  Shutdown config is Not specified by CLI
+  Type: Ethernet
+  HWaddr: 66:6b:4e:3a:10:2f
+  inet 10.10.10.1/24
+  inet6 fe80::646b:4eff:fe3a:102f/64
+  Interface Type dummy
+  Interface Slave Type None
+  protodown: off 
+Interface eth0 is up, line protocol is up
+  Link ups:       0    last: (never)
+  Link downs:     0    last: (never)
+  vrf: default
+  index 2 metric 0 mtu 1500 speed 10000 txqlen 1000
+  flags: <UP,LOWER_UP,BROADCAST,RUNNING,MULTICAST>
+  MPLS  Not specified by CLI
+  Multicast config is Not specified by CLI
+  Shutdown config is Not specified by CLI
+  Type: Ethernet
+  HWaddr: 00:15:5d:6c:e3:68
+  inet 172.24.235.74/20
+  inet6 fe80::215:5dff:fe6c:e368/64
+  Interface Type Other
+  Interface Slave Type None
+  protodown: off 
+Interface lo is up, line protocol is up
+  Link ups:       0    last: (never)
+  Link downs:     0    last: (never)
+  vrf: default
+  index 1 metric 0 mtu 65536 speed 0 txqlen 1000
+  flags: <UP,LOWER_UP,LOOPBACK,RUNNING>
+  MPLS  Not specified by CLI
+  Multicast config is Not specified by CLI
+  Shutdown config is Not specified by CLI
+  Type: Loopback
+  Interface Type Other
+  Interface Slave Type None
+  protodown: off 
+
+=== sudo vtysh -c 'show running-config' ===
+Building configuration...
+
+Current configuration:
+!
+frr version 10.5.1
+frr defaults traditional
+hostname RFXL
+domainname localdomain
+log syslog informational
+service integrated-vtysh-config
+!
+end

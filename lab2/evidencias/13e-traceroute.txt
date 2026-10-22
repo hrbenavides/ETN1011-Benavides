@@ -1,0 +1,8 @@
+=== traceroute -n -m 3 198.51.100.10 ===
+traceroute to 198.51.100.10 (198.51.100.10), 3 hops max, 60 byte packets
+connect: Invalid argument
+(traceroute terminó con código distinto de cero)
+
+=== tracepath -n 198.51.100.10 ===
+ 1:  send failed
+     Resume: pmtu 65535 

@@ -1,0 +1,19 @@
+=== Restaurando: ip route 198.51.100.0/24 blackhole ===
+
+=== DESPUÉS: show ip route 198.51.100.0/24 (FRR) ===
+Routing entry for 198.51.100.0/24
+  Known via "static", distance 1, metric 0, best
+  Last update 00:00:00 ago
+  Flags: Recursion Selected RR Distance 
+  Status: Installed 
+  * unreachable (blackhole), weight 1
+
+
+=== DESPUÉS: ip -4 route show 198.51.100.0/24 (kernel) ===
+blackhole 198.51.100.0/24 proto static metric 20 
+
+=== write memory (para persistir la restauración) ===
+Note: this version of vtysh never writes vtysh.conf
+Building Configuration...
+Integrated configuration saved to /etc/frr/frr.conf
+[OK]

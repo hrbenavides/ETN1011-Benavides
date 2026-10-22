@@ -1,0 +1,25 @@
+=== write memory ===
+Note: this version of vtysh never writes vtysh.conf
+Building Configuration...
+Integrated configuration saved to /etc/frr/frr.conf
+[OK]
+
+=== running-config final ===
+Building configuration...
+
+Current configuration:
+!
+frr version 10.5.1
+frr defaults traditional
+hostname RFXL
+domainname localdomain
+log syslog informational
+service integrated-vtysh-config
+!
+ip route 198.51.100.0/24 blackhole
+!
+router ospf
+ network 10.10.10.0/24 area 0
+exit
+!
+end

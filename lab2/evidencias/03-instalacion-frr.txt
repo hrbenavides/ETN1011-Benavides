@@ -1,0 +1,40 @@
+=== apt policy frr ===
+frr:
+  Installed: 10.5.1-1ubuntu4.1
+  Candidate: 10.5.1-1ubuntu4.1
+  Version table:
+ *** 10.5.1-1ubuntu4.1 500
+        500 http://archive.ubuntu.com/ubuntu resolute-updates/main amd64 Packages
+        500 http://security.ubuntu.com/ubuntu resolute-security/main amd64 Packages
+        100 /var/lib/dpkg/status
+     10.5.1-1ubuntu4 500
+        500 http://archive.ubuntu.com/ubuntu resolute/main amd64 Packages
+=== ps -p 1 -o comm= ===
+systemd
+=== systemctl status frr ===
+● frr.service - FRRouting
+     Loaded: loaded (/usr/lib/systemd/system/frr.service; enabled; preset: enabled)
+     Active: active (running) since Wed 2026-10-21 02:55:38 -03; 21h ago
+ Invocation: 5c1e79327f4f41218f601ea154a171a3
+       Docs: https://frrouting.readthedocs.io/en/latest/setup.html
+   Main PID: 1729 (watchfrr)
+     Status: "FRR Operational"
+      Tasks: 8 (limit: 19070)
+     Memory: 16.3M (peak: 31.7M)
+        CPU: 19.386s
+     CGroup: /system.slice/frr.service
+             ├─1729 /usr/lib/frr/watchfrr -d mgmtd zebra staticd
+             ├─1739 /usr/lib/frr/mgmtd -d -F traditional -A 127.0.0.1
+             ├─1741 /usr/lib/frr/zebra -d -F traditional -A 127.0.0.1 -s 90000000
+             └─1746 /usr/lib/frr/staticd -d -F traditional -A 127.0.0.1
+
+Oct 21 02:55:38 RFXL frrinit.sh[1748]: Waiting for children to finish applying config...
+Oct 21 02:55:38 RFXL frrinit.sh[1765]: [1765|watchfrr] done
+Oct 21 02:55:38 RFXL staticd[1746]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Oct 21 02:55:38 RFXL frrinit.sh[1767]: [1767|staticd] done
+Oct 21 02:55:38 RFXL watchfrr[1729]: [QDG3Y-BY5TN] mgmtd state -> up : connect succeeded
+Oct 21 02:55:38 RFXL watchfrr[1729]: [QDG3Y-BY5TN] zebra state -> up : connect succeeded
+Oct 21 02:55:38 RFXL watchfrr[1729]: [QDG3Y-BY5TN] staticd state -> up : connect succeeded
+Oct 21 02:55:38 RFXL watchfrr[1729]: [KWE5Q-QNGFC] all daemons up, doing startup-complete notify
+Oct 21 02:55:38 RFXL frrinit.sh[1720]:  * Started watchfrr
+Oct 21 02:55:38 RFXL systemd[1]: Started frr.service - FRRouting.

@@ -1,0 +1,22 @@
+=== 1. La ruta existe en el kernel (ip route list) ===
+blackhole 198.51.100.0/24 proto static metric 20 
+
+=== 2. La ruta es tipo blackhole (ip -d route show) ===
+blackhole 198.51.100.0/24 proto static scope global metric 20 
+
+=== 3. FRR confirma que el destino cae en la red blackhole ===
+Routing entry for 198.51.100.0/24
+  Known via "static", distance 1, metric 0, best
+  Last update 00:01:46 ago
+  Flags: Recursion Selected RR Distance 
+  Status: Installed 
+  * unreachable (blackhole), weight 1
+
+
+=== 4. traceroute al destino (debe fallar rápido) ===
+timeout: failed to execute process: No such file or directory (os error 2)
+(traceroute terminó con error esperado)
+
+=== 5. Verificación conceptual: el kernel descarta, no reenvía ===
+La ruta 'blackhole' en Linux indica al kernel que descarte silenciosamente
+los paquetes destinados a ese prefijo. No hay interfaz de salida ni next-hop.

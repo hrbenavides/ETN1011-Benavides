@@ -1,0 +1,60 @@
+=== Configurando router ospf + network 10.10.10.0/24 area 0 ===
+
+=== show ip ospf interface ===
+dummy0 is up
+  ifindex 3, MTU 1500 bytes, BW 0 Mbit <UP,LOWER_UP,BROADCAST,RUNNING,NOARP>
+  Internet Address 10.10.10.1/24, Broadcast 10.10.10.255, Area 0.0.0.0
+  MTU mismatch detection: enabled
+  Router ID 172.24.235.74, Network Type BROADCAST, Cost: 10
+  Transmit Delay is 1 sec, State Waiting, Priority 1
+  No backup designated router on this network
+  Multicast group memberships: OSPFAllRouters
+  Timer intervals configured, Hello 10s, Dead 40s, Wait 40s, Retransmit 5
+    Hello due in 9.985s
+  Neighbor Count is 0, Adjacent neighbor count is 0
+  Graceful Restart hello delay: 10s
+  LSA retransmissions: 0
+
+
+=== show ip ospf neighbor (debe estar VACÍO) ===
+
+Neighbor ID     Pri State           Up Time         Dead Time Address         Interface                        RXmtL RqstL DBsmL
+
+
+=== show ip ospf ===
+ OSPF Routing Process, Router ID: 172.24.235.74
+ Supports only single TOS (TOS0) routes
+ This implementation conforms to RFC2328
+ RFC1583Compatibility flag is disabled
+ OpaqueCapability flag is disabled
+ Initial SPF scheduling delay 0 millisec(s)
+ Minimum hold time between consecutive SPFs 50 millisec(s)
+ Maximum hold time between consecutive SPFs 5000 millisec(s)
+ Hold time multiplier is currently 1
+ SPF algorithm last executed 0.047s ago
+ Last SPF duration 42 usecs
+ SPF timer is inactive
+ LSA minimum interval 5000 msecs
+ LSA minimum arrival 1000 msecs
+ Write Multiplier set to 20 
+ Refresh timer 10 secs
+ Maximum multiple paths(ECMP) supported 256
+ Administrative distance 110
+ Number of external LSA 0. Checksum Sum 0x00000000
+ Number of opaque AS LSA 0. Checksum Sum 0x00000000
+ Number of areas attached to this router: 1
+ Area ID: 0.0.0.0 (Backbone)
+   Number of interfaces in this area: Total: 1, Active: 1
+   Number of fully adjacent neighbors in this area: 0
+   Area has no authentication
+   SPF algorithm executed 1 times
+   Number of LSA 1
+   Number of router LSA 1. Checksum Sum 0x00007cb8
+   Number of network LSA 0. Checksum Sum 0x00000000
+   Number of summary LSA 0. Checksum Sum 0x00000000
+   Number of ASBR summary LSA 0. Checksum Sum 0x00000000
+   Number of NSSA LSA 0. Checksum Sum 0x00000000
+   Number of opaque link LSA 0. Checksum Sum 0x00000000
+   Number of opaque area LSA 0. Checksum Sum 0x00000000
+
+

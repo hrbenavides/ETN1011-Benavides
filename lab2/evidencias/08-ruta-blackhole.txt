@@ -1,0 +1,23 @@
+=== ANTES: show ip route static (FRR) ===
+
+=== Agregando ruta blackhole 198.51.100.0/24 ===
+
+=== DESPUÉS: show ip route 198.51.100.0/24 (FRR) ===
+Routing entry for 198.51.100.0/24
+  Known via "static", distance 1, metric 0, best
+  Last update 00:00:00 ago
+  Flags: Recursion Selected RR Distance 
+  Status: Installed 
+  * unreachable (blackhole), weight 1
+
+
+=== show ip route static (FRR) ===
+Codes: K - kernel route, C - connected, L - local, S - static,
+       R - RIP, O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, F - PBR,
+       f - OpenFabric, t - Table-Direct,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+IPv4 unicast VRF default:
+S>* 198.51.100.0/24 [1/0] unreachable (blackhole), weight 1, 00:00:00

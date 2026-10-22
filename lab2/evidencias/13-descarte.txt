@@ -1,0 +1,12 @@
+=== ip route get 198.51.100.10 (kernel) ===
+
+=== ping -c 2 198.51.100.10 ===
+
+=== sudo vtysh -c 'show ip route 198.51.100.10' (FRR) ===
+Routing entry for 198.51.100.0/24
+  Known via "static", distance 1, metric 0, best
+  Last update 00:00:38 ago
+  Flags: Recursion Selected RR Distance 
+  Status: Installed 
+  * unreachable (blackhole), weight 1
+

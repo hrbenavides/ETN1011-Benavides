@@ -1,0 +1,29 @@
+=== ANTES: show ip route 198.51.100.0/24 ===
+Routing entry for 198.51.100.0/24
+  Known via "static", distance 1, metric 0, best
+  Last update 00:00:46 ago
+  Flags: Recursion Selected RR Distance 
+  Status: Installed 
+  * unreachable (blackhole), weight 1
+
+
+=== Eliminando: no ip route 198.51.100.0/24 blackhole ===
+
+=== DESPUÉS: show ip route 198.51.100.0/24 (FRR, debe estar vacío) ===
+% Network not in table
+
+=== DESPUÉS: ip -4 route show 198.51.100.0/24 (kernel, debe estar vacío) ===
+
+=== show running-config (ya no debe tener la ruta) ===
+Building configuration...
+
+Current configuration:
+!
+frr version 10.5.1
+frr defaults traditional
+hostname RFXL
+domainname localdomain
+log syslog informational
+service integrated-vtysh-config
+!
+end

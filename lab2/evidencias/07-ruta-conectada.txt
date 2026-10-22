@@ -1,0 +1,14 @@
+=== ip -4 route show dev dummy0 (Linux) ===
+10.10.10.0/24 proto kernel scope link src 10.10.10.1 
+
+=== sudo vtysh -c 'show ip route connected' (FRR) ===
+Codes: K - kernel route, C - connected, L - local, S - static,
+       R - RIP, O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, F - PBR,
+       f - OpenFabric, t - Table-Direct,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+IPv4 unicast VRF default:
+C>* 10.10.10.0/24 is directly connected, dummy0, weight 1, 10:29:31
+C>* 172.24.224.0/20 is directly connected, eth0, weight 1, 10:33:03

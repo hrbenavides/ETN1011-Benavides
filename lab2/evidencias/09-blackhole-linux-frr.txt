@@ -1,0 +1,11 @@
+=== ip -4 route show 198.51.100.0/24 (kernel Linux) ===
+blackhole 198.51.100.0/24 proto static metric 20 
+
+=== sudo vtysh -c 'show ip route 198.51.100.0/24' (FRR) ===
+Routing entry for 198.51.100.0/24
+  Known via "static", distance 1, metric 0, best
+  Last update 00:00:00 ago
+  Flags: Recursion Selected RR Distance 
+  Status: Installed 
+  * unreachable (blackhole), weight 1
+

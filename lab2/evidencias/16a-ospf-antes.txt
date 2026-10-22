@@ -1,0 +1,5 @@
+=== ¿ospfd=no en /etc/frr/daemons? ===
+ospfd=no
+
+=== show ip ospf neighbor (antes, no debería existir el comando o estar vacío) ===
+ospfd is not running

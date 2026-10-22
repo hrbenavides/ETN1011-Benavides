@@ -1,0 +1,93 @@
+=== systemctl status frr --no-pager ===
+● frr.service - FRRouting
+     Loaded: loaded (/usr/lib/systemd/system/frr.service; enabled; preset: enabled)
+     Active: active (running) since Wed 2026-10-21 02:55:38 -03; 21h ago
+ Invocation: 5c1e79327f4f41218f601ea154a171a3
+       Docs: https://frrouting.readthedocs.io/en/latest/setup.html
+   Main PID: 1729 (watchfrr)
+     Status: "FRR Operational"
+      Tasks: 8 (limit: 19070)
+     Memory: 17.2M (peak: 31.7M)
+        CPU: 19.688s
+     CGroup: /system.slice/frr.service
+             ├─1729 /usr/lib/frr/watchfrr -d mgmtd zebra staticd
+             ├─1739 /usr/lib/frr/mgmtd -d -F traditional -A 127.0.0.1
+             ├─1741 /usr/lib/frr/zebra -d -F traditional -A 127.0.0.1 -s 90000000
+             └─1746 /usr/lib/frr/staticd -d -F traditional -A 127.0.0.1
+
+Oct 21 02:55:38 RFXL staticd[1746]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Oct 21 02:55:38 RFXL frrinit.sh[1767]: [1767|staticd] done
+Oct 21 02:55:38 RFXL watchfrr[1729]: [QDG3Y-BY5TN] mgmtd state -> up : connect succeeded
+Oct 21 02:55:38 RFXL watchfrr[1729]: [QDG3Y-BY5TN] zebra state -> up : connect succeeded
+Oct 21 02:55:38 RFXL watchfrr[1729]: [QDG3Y-BY5TN] staticd state -> up : connect succeeded
+Oct 21 02:55:38 RFXL watchfrr[1729]: [KWE5Q-QNGFC] all daemons up, doing startup-complete notify
+Oct 21 02:55:38 RFXL frrinit.sh[1720]:  * Started watchfrr
+Oct 21 02:55:38 RFXL systemd[1]: Started frr.service - FRRouting.
+Oct 22 00:49:36 RFXL watchfrr[1729]: [WFP93-1D146] configuration write completed with exit code 0
+Oct 22 00:49:36 RFXL watchfrr[1729]: [WFP93-1D146] configuration write completed with exit code 0
+
+=== journalctl -u frr -n 50 --no-pager ===
+Oct 21 02:55:38 RFXL systemd[1]: Starting frr.service - FRRouting...
+Oct 21 02:55:38 RFXL frrinit.sh[1720]:  * Starting watchfrr with command: '  /usr/lib/frr/watchfrr  -d   mgmtd zebra staticd'
+Oct 21 02:55:38 RFXL watchfrr[1729]: [T83RR-8SM5G] watchfrr 10.5.1 starting: vty@0
+Oct 21 02:55:38 RFXL watchfrr[1729]: [ZCJ3S-SPH5S] mgmtd state -> down : initial connection attempt failed
+Oct 21 02:55:38 RFXL watchfrr[1729]: [ZCJ3S-SPH5S] zebra state -> down : initial connection attempt failed
+Oct 21 02:55:38 RFXL watchfrr[1729]: [ZCJ3S-SPH5S] staticd state -> down : initial connection attempt failed
+Oct 21 02:55:38 RFXL watchfrr[1729]: [YFT0P-5Q5YX] Forked background command [pid 1730]: /usr/lib/frr/watchfrr.sh restart all
+Oct 21 02:55:38 RFXL frrinit.sh[1740]: 2026/10/21 02:55:38 ZEBRA: [KGY44-D47GD][EC 4043309111] Disabling MPLS support (no kernel support)
+Oct 21 02:55:38 RFXL frrinit.sh[1750]: [1750|mgmtd] sending configuration
+Oct 21 02:55:38 RFXL frrinit.sh[1751]: [1751|zebra] sending configuration
+Oct 21 02:55:38 RFXL frrinit.sh[1751]: [1751|zebra] done
+Oct 21 02:55:38 RFXL frrinit.sh[1750]: [1750|mgmtd] done
+Oct 21 02:55:38 RFXL frrinit.sh[1765]: [1765|watchfrr] sending configuration
+Oct 21 02:55:38 RFXL frrinit.sh[1767]: [1767|staticd] sending configuration
+Oct 21 02:55:38 RFXL watchfrr[1729]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Oct 21 02:55:38 RFXL frrinit.sh[1748]: Waiting for children to finish applying config...
+Oct 21 02:55:38 RFXL frrinit.sh[1765]: [1765|watchfrr] done
+Oct 21 02:55:38 RFXL staticd[1746]: [VTVCM-Y2NW3] Configuration Read in Took: 00:00:00
+Oct 21 02:55:38 RFXL frrinit.sh[1767]: [1767|staticd] done
+Oct 21 02:55:38 RFXL watchfrr[1729]: [QDG3Y-BY5TN] mgmtd state -> up : connect succeeded
+Oct 21 02:55:38 RFXL watchfrr[1729]: [QDG3Y-BY5TN] zebra state -> up : connect succeeded
+Oct 21 02:55:38 RFXL watchfrr[1729]: [QDG3Y-BY5TN] staticd state -> up : connect succeeded
+Oct 21 02:55:38 RFXL watchfrr[1729]: [KWE5Q-QNGFC] all daemons up, doing startup-complete notify
+Oct 21 02:55:38 RFXL frrinit.sh[1720]:  * Started watchfrr
+Oct 21 02:55:38 RFXL systemd[1]: Started frr.service - FRRouting.
+Oct 22 00:49:36 RFXL watchfrr[1729]: [WFP93-1D146] configuration write completed with exit code 0
+Oct 22 00:49:36 RFXL watchfrr[1729]: [WFP93-1D146] configuration write completed with exit code 0
+
+=== sudo vtysh -c 'show version' ===
+FRRouting 10.5.1 (RFXL) on Linux(6.18.54.1-microsoft-standard-WSL2).
+Copyright 1996-2005 Kunihiro Ishiguro, et al.
+configured with:
+
+=== sudo vtysh -c 'show running-config' ===
+Building configuration...
+
+Current configuration:
+!
+frr version 10.5.1
+frr defaults traditional
+hostname RFXL
+domainname localdomain
+log syslog informational
+service integrated-vtysh-config
+!
+ip route 198.51.100.0/24 blackhole
+!
+end
+
+=== sudo vtysh -c 'show ip route' ===
+Codes: K - kernel route, C - connected, L - local, S - static,
+       R - RIP, O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, F - PBR,
+       f - OpenFabric, t - Table-Direct,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+IPv4 unicast VRF default:
+K>* 0.0.0.0/0 [0/0] via 172.24.224.1, eth0 onlink, weight 1, 10:41:17
+C>* 10.10.10.0/24 is directly connected, dummy0, weight 1, 10:37:45
+L>* 10.10.10.1/32 is directly connected, dummy0, weight 1, 10:37:45
+C>* 172.24.224.0/20 is directly connected, eth0, weight 1, 10:41:17
+L>* 172.24.235.74/32 is directly connected, eth0, weight 1, 10:41:17
+S>* 198.51.100.0/24 [1/0] unreachable (blackhole), weight 1, 00:00:38

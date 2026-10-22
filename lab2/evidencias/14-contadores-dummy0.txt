@@ -1,0 +1,25 @@
+=== ip -s link show dummy0 (Linux) ===
+3: dummy0: <BROADCAST,NOARP,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/ether 66:6b:4e:3a:10:2f brd ff:ff:ff:ff:ff:ff
+    RX:  bytes packets errors dropped  missed   mcast           
+             0       0      0       0       0       0 
+    TX:  bytes packets errors dropped carrier collsns           
+          1400      20      0       0       0       0 
+
+=== sudo vtysh -c 'show interface dummy0' (FRR) ===
+Interface dummy0 is up, line protocol is up
+  Link ups:       1    last: 2026/10/21 02:59:10.29
+  Link downs:     1    last: 2026/10/21 02:58:53.54
+  vrf: default
+  index 3 metric 0 mtu 1500 speed 0 txqlen 1000
+  flags: <UP,LOWER_UP,BROADCAST,RUNNING,NOARP>
+  MPLS  Not specified by CLI
+  Multicast config is Not specified by CLI
+  Shutdown config is Not specified by CLI
+  Type: Ethernet
+  HWaddr: 66:6b:4e:3a:10:2f
+  inet 10.10.10.1/24
+  inet6 fe80::646b:4eff:fe3a:102f/64
+  Interface Type dummy
+  Interface Slave Type None
+  protodown: off 

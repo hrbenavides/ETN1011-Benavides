@@ -1,0 +1,22 @@
+=== Contenido relevante de /etc/frr/daemons ===
+
+=== sudo vtysh -c 'show version' ===
+FRRouting 10.5.1 (RFXL) on Linux(6.18.54.1-microsoft-standard-WSL2).
+Copyright 1996-2005 Kunihiro Ishiguro, et al.
+configured with:
+    '--build=x86_64-linux-gnu' '--prefix=/usr' '--includedir=${prefix}/include' '--mandir=${prefix}/share/man' '--infodir=${prefix}/share/info' '--sysconfdir=/etc' '--localstatedir=/var' '--disable-option-checking' '--disable-silent-rules' '--libdir=${prefix}/lib/x86_64-linux-gnu' '--runstatedir=/run' '--disable-maintainer-mode' '--sbindir=/usr/lib/frr' '--with-vtysh-pager=/usr/bin/pager' '--libdir=/usr/lib/x86_64-linux-gnu/frr' '--with-moduledir=/usr/lib/x86_64-linux-gnu/frr/modules' '--disable-dependency-tracking' '--enable-rpki' '--enable-scripting' '--enable-pim6d' '--with-libpam' '--enable-doc' '--enable-doc-html' '--enable-snmp' '--enable-fpm' '--disable-protobuf' '--disable-zeromq' '--enable-ospfapi' '--enable-bgp-vnc' '--enable-multipath=256' '--enable-user=frr' '--enable-group=frr' '--enable-vty-group=frrvty' '--enable-configfile-mask=0640' '--enable-logfile-mask=0640' 'build_alias=x86_64-linux-gnu' 'LIBS= -latomic' 'PYTHON=python3'
+
+=== sudo vtysh -c 'show ip route' ===
+Codes: K - kernel route, C - connected, L - local, S - static,
+       R - RIP, O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, F - PBR,
+       f - OpenFabric, t - Table-Direct,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+IPv4 unicast VRF default:
+K>* 0.0.0.0/0 [0/0] via 172.24.224.1, eth0 onlink, weight 1, 10:33:03
+C>* 10.10.10.0/24 is directly connected, dummy0, weight 1, 10:29:31
+L>* 10.10.10.1/32 is directly connected, dummy0, weight 1, 10:29:31
+C>* 172.24.224.0/20 is directly connected, eth0, weight 1, 10:33:03
+L>* 172.24.235.74/32 is directly connected, eth0, weight 1, 10:33:03

@@ -1,0 +1,22 @@
+=== ANTES: ¿existe la ruta en /etc/frr/frr.conf? ===
+(no aparece todavía)
+
+=== Ejecutando write memory en FRR ===
+Note: this version of vtysh never writes vtysh.conf
+Building Configuration...
+Integrated configuration saved to /etc/frr/frr.conf
+[OK]
+
+=== DESPUÉS: contenido relevante de /etc/frr/frr.conf ===
+8:ip route 198.51.100.0/24 blackhole
+
+=== Vista completa de /etc/frr/frr.conf ===
+frr version 10.5.1
+frr defaults traditional
+hostname RFXL
+domainname localdomain
+log syslog informational
+service integrated-vtysh-config
+!
+ip route 198.51.100.0/24 blackhole
+!
