@@ -269,7 +269,9 @@ La ruta volvió a aparecer tanto en FRR como en el kernel, y se persistió de nu
 
 ### 6.1. Interfaces
 
-La interfaz `dummy0` se verificó desde Linux y desde FRR. Desde Linux:
+La interfaz `dummy0` se verificó desde Linux y desde FRR.
+
+Desde Linux `[Bash]`:
 
 ```text
 3: dummy0: <BROADCAST,NOARP,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN
@@ -277,7 +279,7 @@ La interfaz `dummy0` se verificó desde Linux y desde FRR. Desde Linux:
     inet 10.10.10.1/24 scope global dummy0
 ```
 
-Desde FRR:
+Desde FRR `[vtysh]`:
 
 ```text
 Interface dummy0 is up, line protocol is up
@@ -291,7 +293,7 @@ La interfaz `eth0` se mantuvo intacta con `172.24.235.74/20`, y `lo` en estado `
 
 ### 6.2. Rutas
 
-La tabla de rutas de FRR mostró:
+La tabla de rutas de FRR `[vtysh]` mostró:
 
 ```text
 IPv4 unicast VRF default:
@@ -303,7 +305,7 @@ L>* 172.24.235.74/32 is directly connected, eth0
 S>* 198.51.100.0/24 [1/0] unreachable (blackhole)
 ```
 
-La ruta conectada de `dummy0` se verificó desde Linux:
+La ruta conectada de `dummy0` se verificó desde Linux `[Bash]`:
 
 ```bash
 ip -4 route show dev dummy0
@@ -315,7 +317,7 @@ Resultado:
 10.10.10.0/24 proto kernel scope link src 10.10.10.1
 ```
 
-### 6.3. Comparación FRR vs kernel
+### 6.3. Comparación FRR frente a kernel
 
 | Consulta | FRR (`vtysh`) | Kernel Linux (`ip`) |
 | --- | --- | --- |
@@ -323,25 +325,27 @@ Resultado:
 | Ruta conectada `dummy0` | `C>* 10.10.10.0/24 is directly connected, dummy0` | `10.10.10.0/24 dev dummy0 proto kernel scope link src 10.10.10.1` |
 | Ruta por defecto | `K>* 0.0.0.0/0 via 172.24.224.1, eth0 onlink` | `default via 172.24.224.1 dev eth0 proto kernel onlink` |
 
-La comparación confirma que FRR calcula la ruta (plano de control) y el kernel la instala y utiliza para el reenvío (plano de datos). Ambas vistas son consistentes.
+La comparación muestra que FRR calcula la ruta (plano de control) y el kernel la instala y la utiliza para el reenvío (plano de datos). Ambas vistas coinciden.
 
-### 6.4. Descarte de paquetes
+### 6.4. Intento de verificación del descarte
 
-Se intentó verificar el descarte con `ip route get` y `ping`:
+Se intentó verificar el descarte con `ip route get` y `ping` `[Bash]`:
 
 ```bash
 ip route get 198.51.100.10
 ping -c 2 -W 2 198.51.100.10
 ```
 
-Ambos comandos devolvieron errores de la pila de red de WSL2:
+Ambos comandos devolvieron error en este entorno:
 
 ```text
 RTNETLINK answers: Invalid argument
 ping: connect: Invalid argument
 ```
 
-**Observación sobre WSL2:** estos errores no indican un problema en la ruta `blackhole`, sino una limitación conocida de la pila de red de WSL2, que rechaza ciertas operaciones `connect()` y consultas `RTM_GETROUTE` para destinos no enrutables. La ruta **sí está instalada** tanto en FRR como en el kernel, como se verificó por vía alternativa:
+No se determinó la causa exacta de este error. Se documenta como una limitación observada en WSL2 para estas consultas. Tampoco se hicieron pruebas en un Linux nativo para compararlo.
+
+La ruta blackhole sí se verificó por otras vías `[Bash]`:
 
 ```bash
 ip route list | grep 198.51.100.0
@@ -355,11 +359,13 @@ blackhole 198.51.100.0/24 proto static metric 20
 blackhole 198.51.100.0/24 proto static scope global metric 20
 ```
 
-También se intentó con `traceroute` y `tracepath`, que fallaron por la misma limitación de WSL2. En un Linux nativo, `ip route get` mostraría `unreachable` y `ping` fallaría con `Destination Port Unreachable` o similar; el comportamiento observable (descarte) es equivalente, sólo cambia el mensaje de error.
+Y desde FRR `[vtysh]`: `show ip route 198.51.100.0/24` muestra la ruta instalada.
+
+Traceroute y tracepath también fallaron. Por eso el descarte se confirma con la tabla de rutas y no con una prueba de tráfico.
 
 ### 6.5. Contadores de interfaz
 
-Se consultaron los contadores de `dummy0`:
+Se consultaron los contadores de `dummy0` `[Bash]`:
 
 ```bash
 ip -s link show dummy0
@@ -374,20 +380,20 @@ TX:  bytes packets errors dropped carrier collsns
       1400      20      0       0       0       0
 ```
 
-Los contadores de TX reflejan los paquetes transmitidos por la interfaz dummy durante las pruebas de OSPF y ARP internas. Los contadores de RX permanecen en cero porque la interfaz dummy no recibe tráfico externo real.
+Los contadores RX permanecen en cero porque ninguna fuente externa envía tráfico a `dummy0`. El origen de los 20 paquetes TX no se identificó durante el laboratorio y no se atribuye aquí a ninguna prueba concreta.
 
 ### 6.6. Logs y diagnóstico
 
-Se consultaron los logs del servicio:
+Se consultaron los logs del servicio `[Bash]`:
 
 ```bash
 systemctl status frr --no-pager
 sudo journalctl -u frr -n 50 --no-pager
 ```
 
-El servicio se mantuvo `active (running)` durante todo el laboratorio. Los logs mostraron eventos de arranque (`all daemons up, doing startup-complete notify`) y de escritura de configuración (`configuration write completed with exit code 0`).
+El servicio se mantuvo `active (running)` durante todo el laboratorio. Los logs mostraron el evento de arranque (`all daemons up, doing startup-complete notify`) y la escritura de configuración (`configuration write completed with exit code 0`).
 
-**Observación:** FRR no registra en `journalctl` cada cambio individual de rutas estáticas; solo eventos de ciclo de vida del servicio y de `write memory`. Para obtener más detalle sería necesario subir el nivel de log con `log syslog debugging`, lo cual no era requerido por la guía.
+En el registro revisado no aparecieron entradas de los cambios individuales de rutas. Esto se observó en esta instalación con el nivel de log por defecto; no se probó si un nivel de log mayor los registra.
 
 ---
 
@@ -529,20 +535,18 @@ El uso de IA se mantuvo como apoyo para el análisis y la comprensión. Todos lo
 
 ## 11. Conclusiones
 
-1. Se instaló y configuró FRRouting 10.5.1 sobre Ubuntu 26.04 en WSL2, con los daemons `zebra` y `staticd` activos y `ospfd`/`bgpd` controlados explícitamente.
+1. Se instaló y configuró FRRouting 10.5.1 sobre Ubuntu 26.04 en WSL2. Los daemons `zebra` y `staticd` estuvieron activos; `ospfd` y `bgpd` se controlaron explícitamente.
 
-2. Se verificó que en FRR 10.5.1 el archivo `/etc/frr/daemons` ya no contiene `zebra=yes` ni `staticd=yes`, porque esos daemons se inician siempre. `ospfd` y `bgpd` sí se controlan con `=no`.
+2. Se creó la interfaz `dummy0` con dirección `10.10.10.1/24`, y Linux generó automáticamente la ruta conectada `10.10.10.0/24`.
 
-3. Se creó la interfaz `dummy0` con dirección `10.10.10.1/24`, y Linux generó automáticamente la ruta conectada `10.10.10.0/24`.
+3. Se configuró una ruta estática `blackhole` para `198.51.100.0/24`. La ruta aparece en FRR (`S>* ... unreachable (blackhole)`) y en el kernel (`blackhole ... proto static`).
 
-4. Se configuró una ruta estática `blackhole` para `198.51.100.0/24`, y se comprobó que FRR la instala en el kernel. La ruta fue visible desde ambas perspectivas: `S>* ... unreachable (blackhole)` en FRR y `blackhole ... proto static metric 20` en el kernel.
+4. Se verificó que `write memory` es necesario para persistir la configuración de FRR, y que eliminar una ruta en FRR la quita también del kernel.
 
-5. Se verificó que `write memory` es necesario para persistir la configuración de FRR en `/etc/frr/frr.conf`, y que eliminar una ruta en FRR la quita también del kernel.
+5. `ip route get` y `ping` devolvieron `Invalid argument` en este entorno WSL2. La causa exacta no se determinó; la ruta se verificó con `ip route list`, `ip -d route show` y `show ip route`.
 
-6. Se comprobó que `ip route get` y `ping` fallan en WSL2 con `Invalid argument` para destinos blackhole, por una limitación de la pila de red de WSL2. La ruta se verificó por vía alternativa con `ip route list`, `ip -d route show` y `show ip route`.
+6. Se habilitó `ospfd` y se configuró OSPF en `dummy0`. El resultado fue cero vecinos (`Neighbor Count is 0`), lo esperado con un solo router.
 
-7. Se habilitó `ospfd` y se configuró OSPF en `dummy0`, comprobando que un único router no forma vecinos (`Neighbor Count is 0`, `fully adjacent neighbors: 0`), tal como se esperaba.
+7. El Router ID de OSPF se tomó de `eth0` (`172.24.235.74`), porque por defecto FRR usa la dirección IP más alta de sus interfaces activas.
 
-8. Se verificó que el Router ID de OSPF se toma de `eth0` (`172.24.235.74`), no de `dummy0`, porque FRR elige el Router ID más alto entre las interfaces activas.
-
-9. La práctica permitió distinguir claramente el plano de control (FRR) del plano de datos (kernel Linux), y relacionar la sintaxis de FRR con la de Cisco IOS, identificando similitudes y diferencias de fondo.
+8. El laboratorio permitió distinguir el plano de control (FRR) del plano de datos (kernel Linux) y relacionar la sintaxis de FRR con la de Cisco IOS.
